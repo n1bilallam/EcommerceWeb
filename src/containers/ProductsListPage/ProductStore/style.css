@@ -1,0 +1,12 @@
+.productContainer {
+  display: block;
+  margin: 0 10px;
+}
+
+.productContainer .productImgContainer {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  text-align: center;
+  margin: 10px auto;
+}

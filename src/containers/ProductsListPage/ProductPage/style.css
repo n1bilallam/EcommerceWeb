@@ -1,0 +1,23 @@
+.carousele {
+  margin: 0 10px;
+}
+
+.carousele__href {
+  display: block;
+  cursor: pointer;
+}
+.product__part {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.card__product {
+  width: 400px;
+  height: 200px;
+  margin: 5px;
+}
+.product__img {
+  width: 100%;
+  height: 100%;
+}

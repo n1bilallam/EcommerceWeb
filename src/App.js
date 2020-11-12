@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import HomePage from "./containers/HomePage";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ProductsListPage from "./containers/ProductsListPage";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserLoggedIn, updateCart } from "./actions";
+import ProductDetailsPage from "./containers/ProductDetailsPage";
+import CartePage from "./containers/CartPage";
 
 function App() {
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!auth.authanticate) {
+      dispatch(isUserLoggedIn());
+    }
+  }, [auth.authanticate]);
+
+  useEffect(() => {
+    dispatch(updateCart());
+  }, [auth.authanticate]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/cart" component={CartePage} />
+          <Route
+            path="/:productSlug/:productId/p"
+            component={ProductDetailsPage}
+          />
+          <Route path="/:slug" component={ProductsListPage} />
+        </Switch>
+      </Router>
     </div>
   );
 }
