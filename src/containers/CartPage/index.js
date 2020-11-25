@@ -5,6 +5,8 @@ import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
 import CartItem from "./CartItem";
 import { addToCart, getCartItems } from "../../actions";
+import { MaterialButton } from "../../components/MaterialUI";
+import PriceDetails from "../../components/PriceDetails";
 /**
  * @author
  * @function CartePage
@@ -36,10 +38,29 @@ const CartePage = (props) => {
     dispatch(addToCart({ _id, name, price, img }, -1));
   };
 
+  if (props.onlyCartItems) {
+    return (
+      <>
+        {Object.keys(cartItems).map((key, index) => (
+          <CartItem
+            onQuantityInc={onQuantityIncrement}
+            onQuantityDec={onQuantityDecrement}
+            key={index}
+            cartItem={cartItems[key]}
+          ></CartItem>
+        ))}
+      </>
+    );
+  }
+
   return (
     <Layout>
       <div className="cartContainer">
-        <Card headerLeft={"My Cart"} headerRight={<div>Deliver to</div>}>
+        <Card
+          headerLeft={"My Cart"}
+          headerRight={<div>Deliver to</div>}
+          style={{ width: "calc(100% -400px)", overflow: "hidden" }}
+        >
           {Object.keys(cartItems).map((key, index) => (
             <CartItem
               onQuantityInc={onQuantityIncrement}
@@ -48,8 +69,42 @@ const CartePage = (props) => {
               cartItem={cartItems[key]}
             ></CartItem>
           ))}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              background: "#fff",
+              justifyContent: "flex-end",
+              boxShadow: "0 0 10px 10px #eee",
+              padding: "10px 0",
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              style={{
+                width: "250px",
+              }}
+            >
+              <MaterialButton
+                title="Place Order"
+                onClick={() => props.history.push("/checkout")}
+              />
+            </div>
+          </div>
         </Card>
-        <Card style={{ width: "500px" }} headerLeft="Price"></Card>
+        <PriceDetails
+          totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {
+            return qty + cart.cartItems[key].qty;
+          }, 0)}
+          totalPrice={Object.keys(cart.cartItems).reduce(function (
+            totalPrice,
+            key
+          ) {
+            const { price, qty } = cart.cartItems[key];
+            return totalPrice + price * qty;
+          },
+          0)}
+        />
       </div>
     </Layout>
   );

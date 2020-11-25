@@ -31,6 +31,10 @@ export const addToCart = (product, newQty = 1) => {
     const qty = cartItems[product._id]
       ? parseInt(cartItems[product._id].qty + newQty)
       : 1;
+    cartItems[product._id] = {
+      ...product,
+      qty,
+    };
 
     if (auth.authanticate) {
       dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });

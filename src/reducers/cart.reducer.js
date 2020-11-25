@@ -40,6 +40,7 @@ export default (state = initState, action) => {
       state = {
         ...initState,
       };
+      break;
     default:
       break;
   }
