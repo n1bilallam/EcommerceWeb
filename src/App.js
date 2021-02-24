@@ -8,6 +8,8 @@ import { isUserLoggedIn, updateCart } from "./actions";
 import ProductDetailsPage from "./containers/ProductDetailsPage";
 import CartePage from "./containers/CartPage";
 import CheckoutPage from "./containers/CheckoutPage";
+import OrdersPage from "./containers/OrdersPage";
+import OrderDetailsPage from "./containers/OrderDetailsPage";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -28,6 +30,8 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/cart" component={CartePage} />
           <Route path="/checkout" component={CheckoutPage} />
+          <Route path="/account/orders" component={OrdersPage} />
+          <Route path="/order_details/:orderId" component={OrderDetailsPage} />
           <Route
             path="/:productSlug/:productId/p"
             component={ProductDetailsPage}

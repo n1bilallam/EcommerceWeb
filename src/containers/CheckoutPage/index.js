@@ -154,6 +154,7 @@ const CheckoutPage = (props) => {
       totalAmount,
       items,
       paymentStatus: "pending",
+      paymentType: "cad",
     };
     dispatch(addOrder(payload));
     setConfirmOrder(true);
@@ -172,15 +173,13 @@ const CheckoutPage = (props) => {
     }));
     setAddress(address);
   }, [user.address]);
-  if (confirmOrder) {
-    return (
-      <Layout>
-        <Card>
-          <div>thank you</div>
-        </Card>
-      </Layout>
-    );
-  }
+
+  useEffect(() => {
+    if (confirmOrder && user.placedOrderId) {
+      props.history.push(`/order_details/${user.placedOrderId}`);
+    }
+  }, [user.placedOrderId]);
+
   return (
     <Layout>
       <div className="cartContainer" style={{ alignItems: "flex-start" }}>

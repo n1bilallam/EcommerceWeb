@@ -35,7 +35,8 @@
   height: 30px;
   border-bottom: 2px solid #2874f0;
   position: relative;
-  margin-top: 20px;
+  /* background-color: red; */
+  margin-top: 25px;
 }
 .materialInput input {
   width: 100%;

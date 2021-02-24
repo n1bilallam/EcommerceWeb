@@ -1,4 +1,4 @@
-import { userConstants } from "./constants";
+import { cartConstants, userConstants } from "./constants";
 import axios from "../helpers/axios";
 
 export const getAddress = () => {
@@ -59,15 +59,64 @@ export const addOrder = (payload) => {
       const res = await axios.post(`/addorder`, payload);
       dispatch({ type: userConstants.ADD_USER_ORDERS_REQUEST });
       if (res.status === 201) {
-        console.log(res);
-        // dispatch({
-        //   type: userConstants.ADD_USER_ORDERS_SUCCESS,
-        //   payload: { address },
-        // });
+        const { order } = res.data;
+        dispatch({ type: cartConstants.RESET_CART });
+        dispatch({
+          type: userConstants.ADD_USER_ORDERS_SUCCESS,
+          payload: { order },
+        });
       } else {
         const { error } = res.data;
         dispatch({
           type: userConstants.ADD_USER_ORDERS_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getOrders = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`/getorders`);
+      dispatch({ type: userConstants.GET_USER_ORDERS_REQUEST });
+      if (res.status === 200) {
+        const { orders } = res.data;
+        dispatch({
+          type: userConstants.GET_USER_ORDERS_SUCCESS,
+          payload: { orders },
+        });
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type: userConstants.GET_USER_ORDERS_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getOrder = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(`/getorder`, payload);
+      dispatch({ type: userConstants.GET_USER_ORDER_DETAILS_REQUEST });
+      if (res.status === 200) {
+        const { order } = res.data;
+        dispatch({
+          type: userConstants.GET_USER_ORDER_DETAILS_SUCCESS,
+          payload: { order },
+        });
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type: userConstants.GET_USER_ORDER_DETAILS_FAILURE,
           payload: { error },
         });
       }

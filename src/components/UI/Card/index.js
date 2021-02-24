@@ -9,8 +9,19 @@ const Card = (props) => {
   return (
     <div className="card" {...props}>
       {(props.headerLeft || props.headerRight) && (
-        <div className="cardHeader">
-          {props.headerLeft && <div>{props.headerLeft}</div>}
+        <div className="cardHeader" {...props}>
+          {props.headerLeft && (
+            <div
+              {...props}
+              style={{
+                alignSelf: "center",
+                fontSize: "20px",
+                fontWeight: "500",
+              }}
+            >
+              {props.headerLeft}
+            </div>
+          )}
           {props.headerRight && props.headerRight}
         </div>
       )}

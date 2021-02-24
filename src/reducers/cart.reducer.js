@@ -1,15 +1,7 @@
 import { cartConstants } from "../actions/constants";
 
 const initState = {
-  cartItems: {
-    // 123: {
-    //   _id: 12456,
-    //   name: "samsaung s20",
-    //   img: "none.png",
-    //   price: 200,
-    //   qty: 10,
-    // },
-  },
+  cartItems: {},
   updatingCart: false,
   error: null,
 };
@@ -41,6 +33,14 @@ export default (state = initState, action) => {
         ...initState,
       };
       break;
+    case cartConstants.REMOVE_CART_ITEM_REQUEST:
+    case cartConstants.REMOVE_CART_ITEM_SUCCESS:
+      break;
+    case cartConstants.REMOVE_CART_ITEM_FAILURE:
+      state = {
+        ...state,
+        error: action.payload.error,
+      };
     default:
       break;
   }

@@ -22,10 +22,11 @@ const CartItem = (props) => {
     setQty(qty - 1);
     props.onQuantityDec(_id, qty - 1);
   };
+
   return (
     <div className="cartItemContainer">
       <div className="flexRow">
-        <div className="cartProImgContainer">
+        <div className="cartProImgContainer ">
           <img src={generatePublicUrl(img)} alt={""} />
         </div>
         <div className="cartItemDetails">
@@ -38,12 +39,21 @@ const CartItem = (props) => {
       </div>
       <div style={{ display: "flex", margin: "5px 0" }}>
         <div className="quantityControl">
-          <button onClick={onQuantityDecrement}>-</button>
+          <button onClick={onQuantityDecrement} style={{ color: "red" }}>
+            -
+          </button>
           <input value={qty} readOnly />
-          <button onClick={onQuantityIncrement}>+</button>
+          <button onClick={onQuantityIncrement} style={{ color: "green" }}>
+            +
+          </button>
         </div>
         <button className="cartActionBtn">save for later</button>
-        <button className="cartActionBtn">Remove</button>
+        <button
+          className="cartActionBtn"
+          onClick={() => props.onRemoveCartItem(_id)}
+        >
+          Remove
+        </button>
       </div>
     </div>
   );

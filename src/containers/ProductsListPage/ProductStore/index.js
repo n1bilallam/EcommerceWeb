@@ -6,6 +6,9 @@ import CurrencyFormat from "react-currency-format";
 import { generatePublicUrl } from "../../../urlConfig";
 import { Link } from "react-router-dom";
 import Card from "../../../components/UI/Card";
+import { MaterialButton } from "../../../components/MaterialUI";
+import Rating from "../../../components/UI/Rating";
+import Price from "../../../components/UI/Price";
 /**
  * @author
  * @function ProductStore
@@ -13,13 +16,7 @@ import Card from "../../../components/UI/Card";
 
 const ProductStore = (props) => {
   const product = useSelector((state) => state.product);
-  const [priceRange, setPriceRange] = useState({
-    under5k: 5000,
-    under10k: 10000,
-    under15k: 15000,
-    under20k: 20000,
-    under30k: 30000,
-  });
+  const priceRange = product.priceRange;
   const dispatch = useDispatch();
   useEffect(() => {
     const { match } = props;
@@ -31,7 +28,20 @@ const ProductStore = (props) => {
         return (
           <Card
             headerLeft={`${props.match.params.slug} mobile under ${priceRange[key]}`}
-            headerRight={<button className="productView">VIEW ALL</button>}
+            headerRight={
+              <MaterialButton
+                title={"VIEW ALL"}
+                style={{
+                  width: "100px",
+                }}
+                bgColor="#2874f0"
+                fontSize="12px"
+              />
+            }
+            style={{
+              width: "calc(100% - 40px)",
+              margin: "20px",
+            }}
           >
             <div style={{ display: "flex" }}>
               {product.productsByPrice[key].map((product) => (
@@ -48,31 +58,25 @@ const ProductStore = (props) => {
                   <div className="productInfo">
                     <div
                       style={{
-                        marginTop: "15px",
-                        fontSize: "14px",
-                        fontWeight: "500",
+                        margin: "10px 0",
                       }}
                     >
                       {product.name}
                     </div>
-                    <div
-                      style={{
-                        color: " #388e3c",
-                        paddingTop: " 8px",
-                      }}
-                    >
-                      <span>4.3</span>&nbsp;
-                      <span>3353</span>
+                    <div>
+                      <Rating value="4.3" />
+                      &nbsp;&nbsp;
+                      <span
+                        style={{
+                          color: "#777",
+                          fontWeight: "500",
+                          fontSize: "12px",
+                        }}
+                      >
+                        3353
+                      </span>
                     </div>
-                    <CurrencyFormat
-                      value={product.price}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                      renderText={(value) => (
-                        <div className="productPrice">{value}</div>
-                      )}
-                    />
+                    <Price value={product.price} />
                   </div>
                 </Link>
               ))}

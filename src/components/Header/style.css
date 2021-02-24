@@ -89,6 +89,7 @@
   align-items: center;
   margin: 0 20px;
   cursor: pointer;
+  text-decoration: none;
 }
 .cart {
   font-weight: bold;
@@ -125,7 +126,7 @@
   background-color: #2874f0;
   background-repeat: no-repeat;
   background-position: center 85%;
-  padding: 40px 33px;
+  padding: 25px 25px;
   box-sizing: border-box;
 }
 

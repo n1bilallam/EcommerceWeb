@@ -25,6 +25,7 @@ const Modal = (props) => {
 
 const MaterialInput = (props) => {
   const [focus, setFocus] = useState(false);
+  const [touch, setTouch] = useState(false);
 
   return (
     <div className="materialInput">
@@ -49,15 +50,23 @@ const MaterialInput = (props) => {
           onChange={props.onChange}
           onFocus={(e) => {
             setFocus(true);
+            setTouch(true);
           }}
           onBlur={(e) => {
             if (e.target.value === "") {
               setFocus(false);
+            } else {
+              setTouch(false);
             }
           }}
         />
         {props.rightElement ? props.rightElement : null}
       </div>
+      {touch && (
+        <div
+          style={{ fontSize: "10px", color: "red", fontWeight: "500" }}
+        >{`${props.label} is Required`}</div>
+      )}
     </div>
   );
 };
@@ -101,10 +110,12 @@ const DropdownMenu = (props) => {
               <li key={index}>
                 <a
                   onClick={(e) => {
-                    e.preventDefault();
-                    item.onClick && item.onClick();
+                    if (item.onClick) {
+                      e.preventDefault();
+                      item.onClick && item.onClick();
+                    }
                   }}
-                  href={item.href}
+                  href={`${item.href}`}
                 >
                   {item.label}
                 </a>
@@ -124,4 +135,20 @@ const Anchor = (props) => {
   );
 };
 
-export { Modal, MaterialInput, Anchor, MaterialButton, DropdownMenu };
+const Breed = (props) => {
+  return (
+    <div className="breed">
+      <ul>
+        {props.breed &&
+          props.breed.map((item, index) => (
+            <li key={index}>
+              <a href={item.href}>{item.name}</a>
+              {props.breedIcon}
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
+
+export { Modal, MaterialInput, Anchor, MaterialButton, DropdownMenu, Breed };
